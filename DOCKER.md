@@ -12,7 +12,7 @@
    ``` 
 3. **Tag do build**
    ```bash
-        docker tag 2f5c4c025a41 lucasgalo/api-teste:0.1.0
+        docker tag b8d0ae267ba9 lucasgalo/api-teste:0.1.0
    ```
 4. **Login dockerhub**
    ```bash
