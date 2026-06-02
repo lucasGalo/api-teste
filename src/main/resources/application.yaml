@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api-teste
+
+
+
+server:
+  port: 8383
+
+# ===============================
+# = ACTUATOR
+# ===============================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
