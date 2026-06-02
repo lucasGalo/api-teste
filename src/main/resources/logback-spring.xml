@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Appender para Loki -->
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>http://loki:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>app=${spring.application.name},host=${HOSTNAME},level=%level</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <pattern>
+                    {
+                    "timestamp":"%date{ISO8601}",
+                    "level":"%level",
+                    "logger":"%logger{36}",
+                    "thread":"%thread",
+                    "message":"%message",
+                    "requestId":"%X{X-Request-ID}"
+                    }
+                </pattern>
+            </message>
+        </format>
+    </appender>
+
+    <!-- Appender para Console em JSON -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <!-- Logger raiz -->
+    <root level="INFO">
+        <appender-ref ref="LOKI"/>
+        <appender-ref ref="JSON_CONSOLE"/>
+    </root>
+
+    <!-- Loggers específicos para Hibernate -->
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="LOKI"/>
+        <appender-ref ref="JSON_CONSOLE"/>
+    </logger>
+
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+        <appender-ref ref="LOKI"/>
+        <appender-ref ref="JSON_CONSOLE"/>
+    </logger>
+
+</configuration>

@@ -1,8 +1,22 @@
 spring:
   application:
     name: api-teste
-
-
+  # ===============================
+  # = H2 DATABASE
+  # ===============================
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 server:
   port: 8383
@@ -21,3 +35,13 @@ management:
     export:
       prometheus:
         enabled: true
+
+# ===============================
+# = LogBack e LOKI
+# ===============================
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
