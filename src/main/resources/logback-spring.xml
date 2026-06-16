@@ -3,9 +3,10 @@
 
     <!-- Appender para Loki -->
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-        <http>
-            <url>http://192.168.0.100:3100/loki/api/v1/push</url>
-        </http>
+<!--        passando variavel eta com erro-->
+<!--        <http>-->
+<!--            <url>${URL_LOKI}</url>-->
+<!--        </http>-->
         <format>
             <label>
                 <pattern>app=${spring.application.name},host=${HOSTNAME},level=%level</pattern>

@@ -4,15 +4,15 @@
 
 1. **Deletar imagens antigas**
     ```bash
-        docker rmi api-teste:0.1.2
+        docker rmi api-teste:0.1.3
     ``` 
 2. **Build do projeto**
     ```bash
-   docker build -t api-teste:0.1.2 -f docker/Dockerfile .   
+   docker build -t api-teste:0.1.3 -f docker/Dockerfile .   
    ``` 
 3. **Tag do build**
    ```bash
-        docker tag 19f580ea7791 lucasgalo/api-teste:0.1.2
+        docker tag d0979cefb8a8 lucasgalo/api-teste:0.1.3
    ```
 4. **Login dockerhub**
    ```bash
@@ -20,5 +20,5 @@
    ```
 5. **Push da tag**
     ```bash
-        docker push lucasgalo/api-teste:0.1.2
+        docker push lucasgalo/api-teste:0.1.3
     ```

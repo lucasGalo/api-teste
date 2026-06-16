@@ -35,13 +35,32 @@ management:
     export:
       prometheus:
         enabled: true
-
+  # ===============================
+  # = OPENZIPKIN
+  # ===============================
+  tracing:
+    enabled: true
+    sampling:
+      probability: 0.2   # 20% das requisições são amostradas
+  zipkin:
+    tracing:
+      endpoint: ${URL_OPENZIPKIN:http://192.168.0.100:9411/api/v2/spans}
 # ===============================
 # = LogBack e LOKI
 # ===============================
 
 logging:
+  loki:
+    url: ${URL_LOKI:http://192.168.0.100:3100/loki/api/v1/push}
   level:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# ===============================
+# = Variaveis de ambiente para outros serviços
+# ===============================
+
+apps:
+  Loki:
+    url: ${URL_LOKI:http://192.168.0.100:3100/loki/api/v1/push}

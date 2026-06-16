@@ -14,9 +14,14 @@ spec:
     spec:
       containers:
         - name: api-teste
-          image: lucasgalo/api-teste:0.1.2   # substitua pela sua imagem
+          image: lucasgalo/api-teste:0.1.3   # substitua pela sua imagem
           ports:
             - containerPort: 8383
+          env:
+            - name: URL_OPENZIPKIN
+              value: "http://zipkin:9411/api/v2/spans"
+            - name: URL_LOKI
+              value: "http://loki:3100/loki/api/v1/push"
 ---
 apiVersion: v1
 kind: Service
