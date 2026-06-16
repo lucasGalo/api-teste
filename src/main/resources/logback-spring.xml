@@ -1,37 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <!-- Pega o nome da aplicação do Spring -->
+    <springProperty name="name" source="spring.application.name"/>
+    <!-- Pega a URL do Loki do application.properties ou variável de ambiente -->
+    <springProperty name="lokiUrl" source="vars.URL_LOKI"/>
+    <springProperty name="podName" source="POD_NAME"/>
+    <springProperty name="podNamespace" source="POD_NAMESPACE"/>
+
+    <!-- Loki Appender -->
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <!-- Parametrizado via env ou application.yaml -->
-            <url>http://loki:3100/loki/api/v1/push</url>
+            <!-- Usa a variável definida -->
+            <url>${lokiUrl}</url>
         </http>
-        <encoder class="com.github.loki4j.logback.encoder.JsonEncoder">
-            <labels>
-                app=${spring.application.name},host=${HOSTNAME},level=%level
-            </labels>
-            <!-- Não monte JSON manual, use placeholders -->
-            <pattern>%d{ISO8601} [%thread] %level %logger{36} - %msg</pattern>
+        <format>
+            <label>
+                <pattern>app=${name},pod=${podName},namespace=${podNamespace},host=${HOSTNAME},level=%level</pattern>                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <pattern>
+                    {
+                    "level":"%level",
+                    "class":"%logger{36}",
+                    "thread":"%thread",
+                    "message":"%message",
+                    "requestId":"%X{X-Request-ID}"
+                    }
+                </pattern>
+            </message>
+        </format>
+    </appender>
+
+    <!-- Console Appender com mesmo formato JSON -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                {
+                "level":"%level",
+                "class":"%logger{36}",
+                "thread":"%thread",
+                "message":"%message",
+                "requestId":"%X{X-Request-ID}"
+                }
+            </pattern>
         </encoder>
     </appender>
 
-    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>
-
+    <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="LOKI"/>
         <appender-ref ref="JSON_CONSOLE"/>
     </root>
-
-    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
-        <appender-ref ref="LOKI"/>
-        <appender-ref ref="JSON_CONSOLE"/>
-    </logger>
-
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
-        <appender-ref ref="LOKI"/>
-        <appender-ref ref="JSON_CONSOLE"/>
-    </logger>
 
 </configuration>

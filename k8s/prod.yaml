@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-teste
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: api-teste
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-teste
-          image: lucasgalo/api-teste:0.1.9   # substitua pela sua imagem
+          image: lucasgalo/api-teste:0.1.10   # substitua pela sua imagem
           ports:
             - containerPort: 8383
           env:
@@ -22,6 +22,14 @@ spec:
               value: "http://zipkin:9411/api/v2/spans"
             - name: URL_LOKI
               value: "http://loki:3100/loki/api/v1/push"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
 ---
 apiVersion: v1
 kind: Service

@@ -50,8 +50,6 @@ management:
 # ===============================
 
 logging:
-  loki:
-    url: ${URL_LOKI:http://192.168.0.100:3100/loki/api/v1/push}
   level:
     root: INFO
     org.hibernate.SQL: DEBUG
@@ -61,6 +59,5 @@ logging:
 # = Variaveis de ambiente para outros serviços
 # ===============================
 
-apps:
-  Loki:
-    url: ${URL_LOKI:http://192.168.0.100:3100/loki/api/v1/push}
+vars:
+  URL_LOKI: ${URL_LOKI:http://192.168.0.100:3100/loki/api/v1/push}
