@@ -4,26 +4,24 @@
     <!-- Appender para Loki -->
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
+            <!-- Pode ser parametrizado via variável de ambiente LOKI_URL -->
             <url>http://loki:3100/loki/api/v1/push</url>
         </http>
-        <format>
-            <label>
-                <pattern>app=${spring.application.name},host=${HOSTNAME},level=%level</pattern>
-                <readMarkers>true</readMarkers>
-            </label>
-            <message>
-                <pattern>
-                    {
-                    "timestamp":"%date{ISO8601}",
-                    "level":"%level",
-                    "logger":"%logger{36}",
-                    "thread":"%thread",
-                    "message":"%message",
-                    "requestId":"%X{X-Request-ID}"
-                    }
-                </pattern>
-            </message>
-        </format>
+        <encoder class="com.github.loki4j.logback.encoder.JsonEncoder">
+            <pattern>
+                {
+                "timestamp":"%date{ISO8601}",
+                "level":"%level",
+                "logger":"%logger{36}",
+                "thread":"%thread",
+                "message":"%message",
+                "requestId":"%X{X-Request-ID}"
+                }
+            </pattern>
+            <labels>
+                app=${spring.application.name},host=${HOSTNAME},level=%level
+            </labels>
+        </encoder>
     </appender>
 
     <!-- Appender para Console em JSON -->
