@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.galo</groupId>
     <artifactId>api-teste</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <name>api-teste</name>
     <description>api-teste</description>
     <url/>
