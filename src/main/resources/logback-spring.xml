@@ -3,15 +3,15 @@
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
+            <!-- Parametrizado via env ou application.yaml -->
             <url>http://loki:3100/loki/api/v1/push</url>
         </http>
         <encoder class="com.github.loki4j.logback.encoder.JsonEncoder">
-            <!-- Labels são passados aqui -->
             <labels>
                 app=${spring.application.name},host=${HOSTNAME},level=%level
             </labels>
-            <!-- Apenas pattern simples, sem JSON manual -->
-            <pattern>%msg</pattern>
+            <!-- Não monte JSON manual, use placeholders -->
+            <pattern>%d{ISO8601} [%thread] %level %logger{36} - %msg</pattern>
         </encoder>
     </appender>
 
