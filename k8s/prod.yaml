@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-teste
-          image: lucasgalo/api-teste:0.1.5   # substitua pela sua imagem
+          image: lucasgalo/api-teste:0.1.6   # substitua pela sua imagem
           ports:
             - containerPort: 8383
           env:
