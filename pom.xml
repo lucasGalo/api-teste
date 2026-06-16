@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.galo</groupId>
     <artifactId>api-teste</artifactId>
-    <version>0.1.8</version>
+    <version>0.1.9</version>
     <name>api-teste</name>
     <description>api-teste</description>
     <url/>
@@ -38,6 +38,30 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.8.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.mjfryc</groupId>
+            <artifactId>mjaron-tinyloki-java</artifactId>
+            <version>0.3.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.5.34</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.34</version>
         </dependency>
 
         <dependency>
